@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A little letter for Agape</title>
+<style>
+:root {
+  --site-primary: #8BBDEB;
+  --site-on-primary: #142E4B;
+  --site-secondary: #D8CBF4;
+  --site-on-secondary: #302548;
+  --site-background: #17253F;
+  --site-on-background: #F4F0FF;
+  --site-font-body: Georgia, 'Times New Roman', serif;
+  --site-font-heading: 'Courier New', monospace;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--site-background); color: var(--site-on-background); font-family: var(--site-font-body); }
+#app { min-height: 100vh; width: 100%; position: relative; overflow: hidden; background: var(--site-background); padding: calc(28px * var(--site-spacing-scale)) 18px 36px; }
+.pond-scene { position:absolute; inset:0; overflow:hidden; pointer-events:none; opacity:var(--site-decoration-opacity); background:linear-gradient(#17253f 0%,#263f68 38%,#496c98 59%,#244866 60%,#19334f 100%); }
+.pond-scene:before { content:''; position:absolute; left:-8%; right:-8%; top:43%; height:22%; background:repeating-linear-gradient(0deg,transparent 0 13px,#91c7e5 13px 16px,transparent 16px 28px); opacity:.22; clip-path:polygon(0 20%,10% 0,24% 13%,37% 4%,51% 16%,66% 0,82% 12%,100% 2%,100% 100%,0 100%); }
+.pond-scene:after { content:''; position:absolute; left:-5%; right:-5%; bottom:-2%; height:25%; background:repeating-linear-gradient(90deg,#152c3e 0 18px,#1d3b50 18px 36px); clip-path:polygon(0 32%,12% 15%,22% 29%,37% 0,49% 23%,64% 8%,77% 28%,90% 10%,100% 24%,100% 100%,0 100%); }
+.lily-pad { position:absolute; width:72px; height:30px; background:#6bbaae; border:4px solid #a4ded2; border-bottom-width:7px; border-radius:50% 50% 45% 45%; box-shadow:inset -8px -5px 0 #438e8b, 0 5px 0 #183b56; }
+.lily-pad:after { content:''; position:absolute; right:5px; top:-4px; width:20px; height:17px; background:#294e70; clip-path:polygon(0 0,100% 50%,0 100%); }
+.lily { position:absolute; font-size:25px; line-height:1; filter:drop-shadow(2px 3px 0 #263f68); }
+.pad-one { top:51%; left:5%; transform:rotate(-9deg) scale(.8); } .pad-two { top:62%; right:6%; transform:rotate(8deg) scale(1.05); } .pad-three { top:79%; left:13%; transform:rotate(5deg) scale(.7); } .pad-four { top:48%; right:17%; transform:rotate(-4deg) scale(.62); }
+.flower-one { top:47%; left:8%; } .flower-two { top:58%; right:9%; } .flower-three { top:75%; left:15%; font-size:19px; }
+.glow { position: absolute; width: 320px; height: 320px; border-radius: 50%; background: #5f85c8; filter: blur(95px); opacity: .2; pointer-events: none; }
+.glow.one { top: -140px; left: -110px; } .glow.two { right: -140px; bottom: 5%; background: #a38ae2; }
+.shell { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+.topline { display:flex; justify-content:space-between; gap: 12px; align-items:center; font: 12px var(--site-font-heading); letter-spacing: 1.5px; text-transform: uppercase; color: #bfdcf8; }
+.pill { border: 1px solid #6686b6; border-radius: 999px; padding: 8px 12px; }
+.hero { text-align:center; padding: 46px 0 24px; }
+.eyebrow { color:#cfc1f3; font: 12px var(--site-font-heading); letter-spacing: 2px; text-transform:uppercase; }
+h1 { font: bold calc(32px * var(--site-heading-scale))/1.15 var(--site-font-heading); margin: 14px 0 10px; color:#f4f0ff; }
+.subtitle { max-width: 420px; margin:0 auto; color:#c6d5eb; line-height:1.7; font-size:17px; }
+.stage { min-height: 300px; display:flex; justify-content:center; align-items:center; padding: 22px 0 34px; }
+.envelope-button { background:transparent; border:0; color:inherit; cursor:pointer; padding:0; width:min(100%, 380px); text-align:center; font:inherit; }
+.envelope { position:relative; width: min(100%, 310px); height: 190px; margin: 0 auto 25px; filter: drop-shadow(0 18px 25px #080f2080); transition: transform .35s ease; }
+.envelope-button:hover .envelope { transform: translateY(-6px) rotate(-1deg); }
+.envelope-back { position:absolute; inset:0; background:#91bde7; border:3px solid #d8e9fa; border-radius:7px; }
+.letter-peek { position:absolute; left:22px; right:22px; top:12px; height:140px; background:#fff8e9; border:2px solid #e5d6c4; transition:transform .8s cubic-bezier(.2,.8,.2,1); }
+.letter-peek:before { content:'✦  FOR YOU  ✦'; position:absolute; top:27px; left:0; right:0; text-align:center; font:12px var(--site-font-heading); color:#637da6; letter-spacing:2px; }
+.flap { position:absolute; inset:0; background:#b6d5f2; clip-path:polygon(0 0,100% 0,50% 60%); border-top:3px solid #e0efff; transform-origin:top; transition:transform .7s ease; z-index:4; }
+.pocket { position:absolute; inset:0; background:#9bc6ec; clip-path:polygon(0 100%,0 0,50% 57%,100% 0,100% 100%); z-index:3; }
+.seal { position:absolute; z-index:5; top:78px; left:calc(50% - 22px); width:44px;height:44px;border-radius:50%; background:#a79adf; border:2px solid #eee7ff; display:grid;place-items:center; color:#fff; font-size:21px; box-shadow:0 3px 10px #24375a70; transition:opacity .3s, transform .3s; }
+.opened .flap { transform:rotateX(180deg); } .opened .seal { opacity:0; transform:scale(.5); } .opened .letter-peek { transform:translateY(-85px); }
+.click-hint { color:#d4c9f4; font:12px var(--site-font-heading); letter-spacing:1.5px; }
+.primary-btn, .secondary-btn { border:2px solid #b8d9f8; background:#8bbdeb; color:#142e4b; font: bold 12px var(--site-font-heading); letter-spacing:1px; text-transform:uppercase; padding:14px 19px; border-radius:5px; cursor:pointer; box-shadow:4px 4px 0 #596e9d; transition:transform .15s, box-shadow .15s; }
+.primary-btn:hover, .secondary-btn:hover { transform:translate(2px,2px); box-shadow:2px 2px 0 #596e9d; }
+.note { text-align:center; font-size:14px; color:#9fb8da; line-height:1.6; }
+.letter-view { display:none; animation:fadeIn .8s ease both; padding:12px 0 28px; }
+.letter-view.visible { display:block; }
+.paper { color:#443e56; background:#fff8eb; border:3px solid #d5c9f0; box-shadow:0 0 0 5px #647fae, 0 20px 45px #080f2070; padding:clamp(22px,5vw,48px); position:relative; }
+.paper:before { content:'✿'; position:absolute; top:12px; right:17px; color:#8b9fd3; font-size:24px; }
+.paper-top { font:11px var(--site-font-heading); letter-spacing:1.7px; text-transform:uppercase; color:#778bb7; padding-bottom:17px; border-bottom:1px dashed #c9bfd7; margin-bottom:25px; }
+.letter-title { font: bold 22px var(--site-font-heading); color:#475f92; margin:0 0 22px; }
+.letter-copy { font: 15px/1.95 'Courier New', 'Lucida Console', monospace; letter-spacing:.15px; white-space:pre-line; text-shadow:.35px 0 currentColor, -.2px 0 currentColor; }
+.letter-copy p { margin:0 0 18px; }
+.signoff { margin-top:28px; color:#655a80; font-style:italic; line-height:1.8; }
+.end-note { text-align:center; padding:28px 10px 4px; color:#cbd8ef; line-height:1.7; }
+.end-note .flower { font-size:30px; color:#d8cbf4; }
+.controls { display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin:20px 0; }
+.secondary-btn { background:#d8cbf4; border-color:#eee6ff; color:#302548; box-shadow:4px 4px 0 #776a9f; }
+.footer { text-align:center; margin-top:24px; color:#839dc3; font:11px var(--site-font-heading); letter-spacing:1px; }
+.music-row { display:flex; justify-content:center; align-items:center; gap:10px; margin-top:18px; color:#b9cbe6; font:12px var(--site-font-heading); flex-wrap:wrap; }
+.music-row input { max-width:210px; color:#e8e4ff; font:12px var(--site-font-heading); }
+.music-row audio { width:min(100%,300px); height:34px; }
+.hidden { display:none !important; }
+@keyframes fadeIn { from {opacity:0; transform:translateY(10px)} to {opacity:1;transform:translateY(0)} }
+@media (max-width:480px) { #app { padding-left:15px; padding-right:15px; } .hero {padding-top:35px} h1 {font-size:27px} .stage {min-height:270px} .letter-copy {font-size:13px; line-height:1.9} .envelope {height:170px; max-width:280px} .letter-peek {height:126px} .seal {top:68px} .lily-pad {transform:scale(.65)} }
+@media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; scroll-behavior:auto !important; } }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="pond-scene" aria-hidden="true"><span class="lily-pad pad-one"></span><span class="lily-pad pad-two"></span><span class="lily-pad pad-three"></span><span class="lily-pad pad-four"></span><span class="lily flower-one">✿</span><span class="lily flower-two">✿</span><span class="lily flower-three">✿</span></div><div class="glow one" aria-hidden="true"></div><div class="glow two" aria-hidden="true"></div>
+  <main class="shell">
+    <div class="topline"><span>✦ QUEST LOG · 001</span><span class="pill">FOR AGAPE ♡</span></div>
+    <section class="hero" id="intro">
+      <div class="eyebrow">✧ A SIDE QUEST UNLOCKED ✧</div>
+      <h1>Dear Shalom Agape,</h1>
+      <p class="subtitle">A quiet pond. A sealed message. One little quest, made just for you.</p>
+    </section>
+    <section class="stage" id="stage" aria-label="Sealed letter">
+      <button class="envelope-button" id="openEnvelope" aria-label="Open the letter">
+        <div class="envelope" id="envelope" aria-hidden="true"><div class="envelope-back"></div><div class="letter-peek"></div><div class="flap"></div><div class="pocket"></div><div class="seal">♡</div></div>
+        <div class="click-hint">[ INTERACT: OPEN MESSAGE ]</div>
+      </button>
+    </section>
+    <p class="note" id="underNote">NEW QUEST: Read the message tucked inside. <br>Reward: a little piece of someone's heart ♡</p>
+    <section class="letter-view" id="letterView" aria-label="The letter">
+      <article class="paper">
+        <div class="paper-top">✦ QUEST ITEM FOUND · PERSONAL LETTER ✦</div>
+        <h2 class="letter-title">To Agape,</h2>
+        <div class="letter-copy" id="letterCopy">
+          <p>Dear Agape,</p>
+          <p>I have often wondered what it must be like to be loved by someone like you.</p>
+          <p>Someone so gentle with the world, so genuine with the people in it, so full of a kindness that seems to come naturally. Someone who gives so much of herself to the people she loves, who carries the weight of being a good daughter, a good sister, a good friend, and still finds room in her heart to dream of becoming more.</p>
+          <p>I wonder if you know how rare you are.</p>
+          <p>If you know that there is something beautiful about a person who makes goodness seem effortless. Someone whose heart makes friendship feel safe, whose honesty makes trust feel easy, and whose existence makes another person want to be better simply because they have had the privilege of knowing her.</p>
+          <p>And perhaps that is what frightens me most about you. How easy it seems to imagine falling in love with you. Not because I have mistaken admiration for love, but because, if love is to be built upon friendship, gentleness, honesty, and the quiet decision to keep choosing someone, then you seem like the kind of person one could spend a lifetime learning to love.</p>
+          <p>I hope God gives you everything your heart has been brave enough to dream of. I hope you become everything you are meant to be, and that life is as gentle with you as you have been with others. And I hope that, on the days when the world is unkind, you have someone beside you to remind you that you deserve the very same tenderness you give so freely.</p>
+          <p>Because tears are expensive things, Agape. They cost pieces of a heart that has already given so much. And although I cannot promise you a life without sadness, I would hope to be someone who never makes your heart feel that it must endure its sadness alone.</p>
+          <p>Perhaps I am getting ahead of myself. After all, what could a secret admirer possibly know about spending a lifetime with someone they have never met?</p>
+          <p>Perhaps all of this is hypothetical. Perhaps I have simply imagined a girl so wonderful that the thought of knowing her, holding her hand, watching her dreams unfold, and growing alongside her seems almost too good to be true.</p>
+          <p>Or perhaps, somewhere along the way, admiration became a wish. A wish to be the person you tell your stories to at the end of the day. The person who gets to witness your victories, sit with you through your difficult seasons, pray with you over your dreams, and choose you even when choosing you requires effort.</p>
+          <p>A wish to call you mine.</p>
+          <p>And perhaps, if this were a different kind of letter, I would tell you that I have met you before. That there was an art gallery, and a day that quietly changed the way I imagined my future. That I have questioned many things, but never quite managed to convince myself that my heart was wrong about you.</p>
+        </div>
+        <div class="signoff">With love,<br>Your not-so-secret admirer,<br><strong>Remmy</strong></div>
+      </article>
+      <div class="end-note"><div class="flower">✿</div><div>May life be gentle with you, my Baba.</div><div style="color:#aabfe0;font-size:14px;margin-top:5px">— always wishing you beautiful things ♡</div></div>
+      <div class="controls"><button class="secondary-btn" id="closeLetter">CLOSE LETTER</button><button class="primary-btn" id="readAgain">READ AGAIN</button></div>
+    </section>
+    <div class="music-row" id="musicControls"><span>♫ OPTIONAL SOUNDTRACK</span><label for="songFile">Choose song:</label><input type="file" id="songFile" accept="audio/*" aria-label="Choose a music file"><audio id="music" controls loop class="hidden"></audio></div>
+    <div class="footer">MADE WITH CARE · ONE LITTLE SECRET AT A TIME</div>
+  </main>
+</div>
+<script>
+const openButton = document.getElementById('openEnvelope');
+const envelope = document.getElementById('envelope');
+const stage = document.getElementById('stage');
+const intro = document.getElementById('intro');
+const letterView = document.getElementById('letterView');
+const underNote = document.getElementById('underNote');
+openButton.addEventListener('click', () => {
+  envelope.classList.add('opened');
+  openButton.disabled = true;
+  openButton.querySelector('.click-hint').textContent = '[ OPENING YOUR LETTER… ]';
+  window.setTimeout(() => {
+    stage.classList.add('hidden');
+    intro.classList.add('hidden');
+    underNote.classList.add('hidden');
+    letterView.classList.add('visible');
+    letterView.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 650);
+});
+function closeLetter() {
+  letterView.classList.remove('visible');
+  stage.classList.remove('hidden');
+  intro.classList.remove('hidden');
+  underNote.classList.remove('hidden');
+  envelope.classList.remove('opened');
+  openButton.disabled = false;
+  openButton.querySelector('.click-hint').textContent = '[ CLICK TO OPEN ]';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+document.getElementById('closeLetter').addEventListener('click', closeLetter);
+document.getElementById('readAgain').addEventListener('click', () => { letterView.scrollIntoView({behavior:'smooth', block:'start'}); });
+const songFile = document.getElementById('songFile');
+const music = document.getElementById('music');
+let currentSongUrl = null;
+songFile.addEventListener('change', () => {
+  const file = songFile.files && songFile.files[0];
+  if (!file) return;
+  if (currentSongUrl) URL.revokeObjectURL(currentSongUrl);
+  currentSongUrl = URL.createObjectURL(file);
+  music.src = currentSongUrl;
+  music.classList.remove('hidden');
+  music.load();
+  music.play().catch(() => {});
+});
+</script>
+</body>
+</html>
