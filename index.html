@@ -84,7 +84,7 @@ h1 { font: bold calc(32px * var(--site-heading-scale))/1.15 var(--site-font-head
     <div class="topline"><span>✦ QUEST LOG · 001</span><span class="pill">FOR AGAPE ♡</span></div>
     <section class="hero" id="intro">
       <div class="eyebrow">✧ A SIDE QUEST UNLOCKED ✧</div>
-      <h1>Dear Shalom Agape,</h1>
+      <h1>Dear Agape,</h1>
       <p class="subtitle">A quiet pond. A sealed message. One little quest, made just for you.</p>
     </section>
     <section class="stage" id="stage" aria-label="Sealed letter">
@@ -118,21 +118,7 @@ h1 { font: bold calc(32px * var(--site-heading-scale))/1.15 var(--site-font-head
       <div class="end-note"><div class="flower">✿</div><div>May life be gentle with you, my Baba.</div><div style="color:#aabfe0;font-size:14px;margin-top:5px">— always wishing you beautiful things ♡</div></div>
       <div class="controls"><button class="secondary-btn" id="closeLetter">CLOSE LETTER</button><button class="primary-btn" id="readAgain">READ AGAIN</button></div>
     </section>
-    <div class="music-row" id="musicControls"><span>♫ OPTIONAL SOUNDTRACK</span><label for="songFile">Choose song:</label><input type="file" id="songFile" accept="audio/*" aria-label="Choose a music file"><audio id="music" controls loop class="hidden"></audio></div>
-<div style="text-align:center; margin:24px 0; color:#b9cbe6; font-family:'Courier New',monospace; font-size:12px;">
-  ♫ A LITTLE SOUNDTRACK
-  <br><br>
-  <audio controls loop preload="metadata" style="width:min(100%,300px);">
-    <source src="song.mp3" type="audio/mpeg">
-    Your browser does not support audio playback.
-  </audio>
-  <br><br>
-  Press play when you're ready ♡
-</div>
-
-    <div class="footer">MADE WITH CARE · ONE LITTLE SECRET AT A TIME</div>
-  </main>
-</div>
+   
 <script>
 const openButton = document.getElementById('openEnvelope');
 const envelope = document.getElementById('envelope');
@@ -165,7 +151,7 @@ function closeLetter() {
 document.getElementById('closeLetter').addEventListener('click', closeLetter);
 document.getElementById('readAgain').addEventListener('click', () => { letterView.scrollIntoView({behavior:'smooth', block:'start'}); });
 const songFile = document.getElementById('songFile');
-const music = document.getElementById('music');
+
 let currentSongUrl = null;
 songFile.addEventListener('change', () => {
   const file = songFile.files && songFile.files[0];
